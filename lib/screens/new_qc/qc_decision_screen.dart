@@ -138,27 +138,58 @@ class _QcDecisionScreenState extends ConsumerState<QcDecisionScreen> {
                     FreshnessGauge(score: widget.freshnessScore, radius: 50),
                     const SizedBox(height: 16),
                     StatusBadge(status: widget.freshnessStatus),
-                    const SizedBox(height: 24),
-                    Container(
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: AppColors.bgTertiary,
-                        borderRadius: BorderRadius.circular(AppRadius.sm),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Row(
-                            children: [
-                              Icon(Icons.auto_awesome, size: 16, color: AppColors.accentPrimary),
-                              SizedBox(width: 8),
-                              Text('Rekomendasi AI', style: TextStyle(fontWeight: FontWeight.w600, color: AppColors.textPrimary)),
-                            ],
+                    const SizedBox(height: 16),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const CircleAvatar(
+                          radius: 24,
+                          backgroundColor: Colors.white,
+                          backgroundImage: AssetImage('assets/images/ai_mascot.png'),
+                        ),
+                        const SizedBox(width: 12),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: AppColors.brandPrimary.withOpacity(0.05),
+                              borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(16),
+                                bottomLeft: Radius.circular(16),
+                                bottomRight: Radius.circular(16),
+                              ),
+                              border: Border.all(color: AppColors.accentPrimary.withOpacity(0.3)),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Row(
+                                  children: [
+                                    Icon(Icons.auto_awesome, size: 16, color: AppColors.brandPrimary),
+                                    SizedBox(width: 6),
+                                    Text(
+                                      'Freshness AI Says:',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.brandPrimary,
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  widget.aiRecommendation,
+                                  style: const TextStyle(
+                                    color: AppColors.textPrimary,
+                                    height: 1.5,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          const SizedBox(height: 8),
-                          Text(widget.aiRecommendation, style: const TextStyle(color: AppColors.textSecondary)),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

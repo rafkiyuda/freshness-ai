@@ -64,6 +64,63 @@ class _NewQcFormScreenState extends State<NewQcFormScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            // Mascot Greeting
+            Container(
+              margin: const EdgeInsets.only(bottom: 24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const CircleAvatar(
+                    radius: 28,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('assets/images/ai_mascot.png'),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.bgCard,
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(16),
+                          bottomLeft: Radius.circular(16),
+                          bottomRight: Radius.circular(16),
+                        ),
+                        border: Border.all(color: AppColors.brandPrimary.withOpacity(0.2)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.brandPrimary.withOpacity(0.05),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          )
+                        ]
+                      ),
+                      child: const Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Freshness AI',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.brandPrimary,
+                              fontSize: 14,
+                            ),
+                          ),
+                          SizedBox(height: 4),
+                          Text(
+                            'Halo! Silakan pilih produk dan supplier sebelum kita mulai pemindaian kamera ya.',
+                            style: TextStyle(
+                              color: AppColors.textPrimary,
+                              height: 1.5,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Card(
               child: Padding(
                 padding: const EdgeInsets.all(20.0),

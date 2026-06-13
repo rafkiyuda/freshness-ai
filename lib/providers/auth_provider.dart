@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:dio/dio.dart';
 import '../services/local_db_service.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'service_providers.dart';
 
 class AuthState {
@@ -49,8 +50,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<bool> login(String email, String password) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
+      final baseUrl = dotenv.env['API_BASE_URL'] ?? 'http://localhost:3000/api';
       final response = await _dio.post(
-        'https://kongsi-logi.vercel.app/api/auth/login',
+        '$baseUrl/auth/login',
         data: {'email': email, 'password': password},
       );
 
@@ -79,6 +81,27 @@ class AuthNotifier extends StateNotifier<AuthState> {
       state = state.copyWith(isLoading: false, error: 'Terjadi kesalahan: \$e');
       return false;
     }
+  }
+
+  Future<bool> updatePassword(String oldPassword, String newPassword) async {
+    final currentUserData = state.userData;
+    if (currentUserData == null) return false;
+    
+    // Simulate network delay
+    await Future.delayed(const Duration(milliseconds: 800));
+    
+    // Verify old password
+    if (currentUserData['password'] != oldPassword && currentUserData['password'] != null) {
+      return false; // Wrong old password
+    }
+    
+    // Update local data
+    final updatedData = Map<String, dynamic>.from(currentUserData);
+    updatedData['password'] = newPassword;
+    
+    await _localDb.saveAuthData(updatedData);
+    state = state.copyWith(userData: updatedData);
+    return true;
   }
 
   Future<void> logout() async {

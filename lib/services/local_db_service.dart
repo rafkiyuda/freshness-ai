@@ -5,12 +5,14 @@ import '../config/constants.dart';
 class LocalDbService {
   late Box<QcSession> _qcBox;
   late Box _authBox;
+  late Box _settingsBox;
 
   Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(QcSessionAdapter());
     _qcBox = await Hive.openBox<QcSession>(Constants.hiveBoxQcSessions);
     _authBox = await Hive.openBox('authBox');
+    _settingsBox = await Hive.openBox('settingsBox');
   }
 
   // === Auth Methods ===
@@ -25,6 +27,16 @@ class LocalDbService {
 
   Future<void> clearAuthData() async {
     await _authBox.clear();
+  }
+
+  // === Settings Methods ===
+  Future<void> saveSettings(Map<String, dynamic> data) async {
+    await _settingsBox.putAll(data);
+  }
+
+  Map<String, dynamic>? getSettings() {
+    if (_settingsBox.isEmpty) return null;
+    return Map<String, dynamic>.from(_settingsBox.toMap());
   }
 
   // === QC Methods ===

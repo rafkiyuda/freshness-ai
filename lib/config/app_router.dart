@@ -11,7 +11,11 @@ import '../screens/sync/pending_sync_screen.dart';
 import '../screens/webview/rfid_webview_screen.dart';
 import '../screens/auth/login_screen.dart';
 import '../screens/profile/profile_screen.dart';
+import '../screens/profile/settings_screen.dart';
+import '../screens/profile/help_center_screen.dart';
+import '../screens/notifications/notifications_screen.dart';
 import '../providers/auth_provider.dart';
+import '../providers/settings_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
@@ -29,7 +33,11 @@ final routerProvider = Provider<GoRouter>((ref) {
       final isLoggedIn = authState.isLoggedIn;
 
       if (!isLoggedIn && !isLoggingIn) return '/login';
-      if (isLoggedIn && isLoggingIn) return '/';
+      
+      if (isLoggedIn && isLoggingIn) {
+        return '/';
+      }
+      
       return null;
     },
     routes: [
@@ -105,6 +113,21 @@ final routerProvider = Provider<GoRouter>((ref) {
       path: '/pending-sync',
       parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const PendingSyncScreen(),
+    ),
+    GoRoute(
+      path: '/notifications',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const NotificationsScreen(),
+    ),
+    GoRoute(
+      path: '/settings',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const SettingsScreen(),
+    ),
+    GoRoute(
+      path: '/help',
+      parentNavigatorKey: _rootNavigatorKey,
+      builder: (context, state) => const HelpCenterScreen(),
     ),
     GoRoute(
       path: '/login',
